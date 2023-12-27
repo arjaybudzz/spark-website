@@ -3,14 +3,10 @@ import LoginForm from "./_components/LoginForm"
 
 const Login = () => {
     return (
-    <Container
-        sx={{
-            width: "100%",
-            height: "100%"
-        }}
-        component="div">
+    <div 
+        className="flex w-screen h-screen justify-center items-center bg-gray-300">
         <LoginForm />
-    </Container>
+    </div>
     )    
 }
 
