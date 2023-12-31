@@ -19,7 +19,9 @@ jobs:
           cd frontend
           npm ci --force
       - name: build the app
-        run: npm run build --if-present
+        run: |
+          cd frontend
+          npm run build --if-present
       - name: test the app
         run: npm run test
         shell: bash
