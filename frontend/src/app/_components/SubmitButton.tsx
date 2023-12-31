@@ -1,7 +1,7 @@
 'use client'
 
 import { Button, CircularProgress } from "@mui/material"
-import { useFormStatus } from "react-dom"
+import { useFormStatus } from "react-dom";
 
 const SubmitButton = () => {
     const {pending} = useFormStatus();
