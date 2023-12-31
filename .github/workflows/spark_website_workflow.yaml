@@ -23,6 +23,8 @@ jobs:
           cd frontend
           npm run build --if-present
       - name: test the app
-        run: npm run test
+        run: |
+          cd frontend
+          npm run test
         shell: bash
     
