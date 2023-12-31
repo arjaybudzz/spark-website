@@ -1,5 +1,4 @@
-import { Container } from "@mui/material"
-import LoginForm from "./_components/LoginForm"
+import LoginForm from "./_components/LoginForm";
 
 const Login = () => {
     return (
