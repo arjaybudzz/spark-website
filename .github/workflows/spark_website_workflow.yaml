@@ -2,10 +2,8 @@ name: 'spark website workflow'
 
 on:
   push:
-    branches
-
-  pull-request:
-    branches
+    branches:
+      generate-register-page
 
 strategy:
   matrix:
