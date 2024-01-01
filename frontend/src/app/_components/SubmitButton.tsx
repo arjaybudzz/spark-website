@@ -19,8 +19,9 @@ const SubmitButton = () => {
                     opacity: "0.3",
                     color: "black"
                 }
-            }}>
-            {pending? <CircularProgress /> : "SUBMIT"}
+            }}
+            disabled={pending? true : false}>
+            {pending? <CircularProgress sx={{color: "white", scale: "0.70"}}/> : "SUBMIT"}
         </Button>
     )
 }

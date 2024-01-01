@@ -1,4 +1,5 @@
 import SubmitButton from '@/app/_components/SubmitButton'
+import { createUser } from '@/app/actions/user/userActions'
 import { Typography, TextField } from '@mui/material'
 import React from 'react'
 import { z } from "zod"
@@ -30,10 +31,11 @@ const RegisterForm = () => {
             })
         }
     })
-
     
   return (
     <form
+        method='POST'
+        action={createUser}
         className="flex flex-col justify-around items-center w-1/3 h-3/4 bg-white shadow-xl rounded-xl px-8">
         <Typography 
             variant='h4' 
@@ -51,7 +53,8 @@ const RegisterForm = () => {
                 required
                 sx={{
                     width: "100%"
-                }}/>
+                }}
+                name="username-input"/>
 
             <TextField 
                 label="Password"
@@ -59,7 +62,8 @@ const RegisterForm = () => {
                 required
                 sx={{
                     width: "100%"
-                }}/>
+                }}
+                name="password-input"/>
 
             <TextField 
                 label="Password Confirmation"
@@ -67,7 +71,8 @@ const RegisterForm = () => {
                 required
                 sx={{
                     width: "100%"
-                }}/>
+                }}
+                name="password-confirmation-input"/>
         </div>
 
         <SubmitButton />
