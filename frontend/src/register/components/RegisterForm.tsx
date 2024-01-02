@@ -1,7 +1,7 @@
 import { TextField, Typography } from '@mui/material'
 import SubmitButton from '../../components/SubmitButton'
 import * as yup from 'yup'
-import { useForm, useFormState } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import User from '../../../types'
 import { useState } from 'react'
@@ -17,6 +17,8 @@ const RegisterForm = () => {
         password: "",
         passwordConfirmation: ""
     })
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const validation = yup.object().shape({
         username: yup.string().required("Please enter your username"),
@@ -35,6 +37,8 @@ const RegisterForm = () => {
     })
 
     const createUser = async(data: Partial<User>, url: string = userUrl): Promise<void> => {
+        setLoading(!loading);
+
         await axios.post(url, {
             username: data.username,
             password: data.password,
@@ -45,6 +49,7 @@ const RegisterForm = () => {
     
         }).catch((errors) => {
             console.log(errors);
+            setLoading(loading);
         })
     }
 
@@ -104,8 +109,7 @@ const RegisterForm = () => {
                 }}/>
         </div>
 
-        <SubmitButton />
-        
+        <SubmitButton pending={loading} />
     </form>
   )
 }

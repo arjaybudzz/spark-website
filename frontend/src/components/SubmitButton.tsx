@@ -1,8 +1,7 @@
-import { Button } from "@mui/material"
+import { Button, CircularProgress } from "@mui/material"
+import { SetStateAction, useState } from "react"
 
-
-
-const SubmitButton = () => {
+const SubmitButton = (props: {[key: string]: any}) => {
 
   return (
     <Button
@@ -13,7 +12,7 @@ const SubmitButton = () => {
             height: "50px",
             backgroundColor: "black"
         }}>
-            SUBMIT
+            {props.pending? <CircularProgress sx={{color: "white", scale: "0.65"}}/> : "SUBMIT"}
     </Button>
   )
 }

@@ -5,7 +5,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import User from '../../../types'
 import { useState } from 'react'
-import { loginUser } from '../../api/user/userActions'
+import axios from 'axios'
+import { loginUrl } from '../../api/baseUrl'
 
 
 const LoginForm = () => {
@@ -13,6 +14,8 @@ const LoginForm = () => {
         username: "",
         password: ""
     })
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const validation = yup.object().shape({
         username: yup.string().required("Please enter your username"),
@@ -22,11 +25,26 @@ const LoginForm = () => {
     const {register, handleSubmit, formState: { errors }} = useForm({
         resolver: yupResolver(validation)
     })
+    
+    const loginUser = async (data: Partial<User>, url: string = loginUrl): Promise<void> => {
+        setLoading(!loading);
+
+        await axios.post(url, {
+            username: data.username,
+            password: data.password
+        }).then((response) => {
+            console.log(response);
+            
+        }).catch((errors) => {
+            console.log(errors);
+            setLoading(loading);
+        })
+    }
 
   return (
     <form
         method="POST"
-        onSubmit={handleSubmit(() => loginUser)} 
+        onSubmit={handleSubmit(() => loginUser(user))} 
         className='flex flex-col justify-around items-center bg-white w-1/3 h-3/4 rounded-xl p-6 shadow-xl'>
         <Typography 
             variant='h4' 
@@ -64,10 +82,9 @@ const LoginForm = () => {
                 onChange={(e) => {
                     setUser({...user, password: e.target.value});
                 }}/>
-        </div>
 
-        <SubmitButton />
-        
+                <SubmitButton pending={loading}/>
+        </div>     
     </form>
   )
 }
