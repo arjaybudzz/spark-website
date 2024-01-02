@@ -7,9 +7,12 @@ import User from '../../../types'
 import { useState } from 'react'
 import axios from 'axios'
 import { loginUrl } from '../../api/baseUrl'
+import { useNavigate } from 'react-router-dom'
 
 
 const LoginForm = () => {
+    const navigate = useNavigate();
+
     const [user, setUser] = useState<Partial<User>>({
         username: "",
         password: ""
@@ -26,14 +29,12 @@ const LoginForm = () => {
         resolver: yupResolver(validation)
     })
     
-    const loginUser = async (data: Partial<User>, url: string = loginUrl): Promise<void> => {
+    const loginUser = async (url: string = loginUrl(user.username, user.password)): Promise<void> => {
         setLoading(!loading);
 
-        await axios.post(url, {
-            username: data.username,
-            password: data.password
-        }).then((response) => {
+        await axios.post(url).then((response) => {
             console.log(response);
+            navigate("/feed");
             
         }).catch((errors) => {
             console.log(errors);
@@ -44,7 +45,7 @@ const LoginForm = () => {
   return (
     <form
         method="POST"
-        onSubmit={handleSubmit(() => loginUser(user))} 
+        onSubmit={handleSubmit(() => loginUser())} 
         className='flex flex-col justify-around items-center bg-white w-1/3 h-3/4 rounded-xl p-6 shadow-xl'>
         <Typography 
             variant='h4' 
