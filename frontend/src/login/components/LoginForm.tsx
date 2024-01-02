@@ -27,7 +27,7 @@ const LoginForm = () => {
     <form
         method="POST"
         onSubmit={handleSubmit(() => loginUser)} 
-        className='flex flex-col justify-around items-center bg-white w-1/3 h-3/4 rounded-xl p-6'>
+        className='flex flex-col justify-around items-center bg-white w-1/3 h-3/4 rounded-xl p-6 shadow-xl'>
         <Typography 
             variant='h4' 
             component='h2'

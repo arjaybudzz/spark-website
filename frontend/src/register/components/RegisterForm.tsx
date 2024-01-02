@@ -1,14 +1,17 @@
 import { TextField, Typography } from '@mui/material'
 import SubmitButton from '../../components/SubmitButton'
 import * as yup from 'yup'
-import { useForm } from 'react-hook-form'
+import { useForm, useFormState } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import User from '../../../types'
 import { useState } from 'react'
-import { createUser } from '../../api/user/userActions'
-
+import axios from 'axios'
+import { userUrl } from '../../api/baseUrl'
+import { useNavigate } from 'react-router-dom'
 
 const RegisterForm = () => {
+    const navigate = useNavigate();
+
     const [user, setUser] = useState<Partial<User>>({
         username: "",
         password: "",
@@ -31,11 +34,25 @@ const RegisterForm = () => {
         resolver: yupResolver(validation)
     })
 
+    const createUser = async(data: Partial<User>, url: string = userUrl): Promise<void> => {
+        await axios.post(url, {
+            username: data.username,
+            password: data.password,
+            password_confirmation: data.passwordConfirmation
+        }).then((response) => {
+            console.log(response);
+            navigate("/registered");
+    
+        }).catch((errors) => {
+            console.log(errors);
+        })
+    }
+
   return (
     <form
         method="POST"
         onSubmit={handleSubmit(() => createUser(user))} 
-        className='flex flex-col justify-around items-center bg-white w-1/3 h-3/4 rounded-xl p-6'>
+        className='flex flex-col justify-around items-center bg-white w-1/3 h-3/4 rounded-xl p-6 shadow-xl'>
         <Typography 
             variant='h4' 
             component='h2'

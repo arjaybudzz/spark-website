@@ -1,4 +1,3 @@
-import React from 'react'
 import User from '../../../types'
 import { loginUrl, userUrl } from '../baseUrl'
 import axios from 'axios'
@@ -9,6 +8,7 @@ export const loginUser = async (data: Partial<User>, url: string = loginUrl): Pr
         password: data.password
     }).then((response) => {
         console.log(response);
+        
     }).catch((errors) => {
         console.log(errors);
     })
@@ -21,6 +21,7 @@ export const createUser = async(data: Partial<User>, url: string = userUrl): Pro
         password_confirmation: data.passwordConfirmation
     }).then((response) => {
         console.log(response);
+
     }).catch((errors) => {
         console.log(errors);
     })
