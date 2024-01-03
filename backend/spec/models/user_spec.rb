@@ -9,4 +9,8 @@ RSpec.describe User, type: :model do
   describe "password validations" do
     it { should have_secure_password }
   end
+
+  describe 'association validations' do
+    it { should have_many(:posts).dependent(:destroy) }
+  end
 end
