@@ -53,11 +53,71 @@ RSpec.describe "Api::V1::Posts", type: :request do
       before do
         post api_v1_posts_url,
           params: { post: @post_valid_attributes },
-          headers: { Authorization: JsonWebToken.encode(user_id: @post.user_id) },
           as: :json
       end
 
       it { expect(response).to have_http_status(:forbidden) }
     end
   end
+
+  describe 'PATCH /update' do
+    context 'update a post if input is valid and the current user is the owner' do
+      before do
+        patch api_v1_post_url(@post),
+          params: { post: @post_valid_attributes },
+          headers: { Authorization: JsonWebToken.encode(user_id: @post.user_id) },
+          as: :json
+      end
+
+      it { expect(response).to have_http_status(:success) }
+    end
+
+    context 'do not update post if input is invalid and the current user is the owner' do
+      before do
+        patch api_v1_post_url(@post),
+          params: { post: @post_invalid_attributes },
+          headers: { Authorization: JsonWebToken.encode(user_id: @post.user_id) },
+          as: :json
+      end
+
+      it { expect(response).to have_http_status(:unprocessable_entity) }
+    end
+
+    context 'forbid to update a post if it is not owned by the current user' do
+      let(:another_post) { create(:post) }  # different user_id
+
+      before do
+        patch api_v1_post_url(@post),
+          params: { post: @post_valid_attributes },
+          headers: { Authorization: JsonWebToken.encode(user_id: another_post.user_id) },
+          as: :json
+      end
+
+      it { expect(response).to have_http_status(:forbidden) }
+    end
+  end
+
+  describe 'DELETE /destroy' do
+    context 'delete post if the post is owned by the current user' do
+      before do
+        delete api_v1_post_url(@post),
+          headers: { Authorization: JsonWebToken.encode(user_id: @post.user_id) },
+          as: :json
+      end
+
+      it { expect(response).to have_http_status(:no_content) }
+    end
+
+    context 'forbid to delete if the post is not owned by the current user' do
+      let(:another_post) { create(:post) }
+      
+      before do
+        delete api_v1_post_url(@post),
+          headers: { Authorization: JsonWebToken.encode(user_id: another_post.user_id) },
+          as: :json
+      end
+
+      it { expect(response).to have_http_status(:forbidden) }
+    end
+  end     
 end
