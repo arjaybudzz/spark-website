@@ -13,7 +13,7 @@ RSpec.describe "Api::V1::Users", type: :request do
       get api_v1_users_url, as: :json
     end
 
-    it { expect(json.length).to eq(4) }
+    it { expect(json[:data].length).to eq(4) }
     it { expect(response).to have_http_status(:success) }
   end
 
@@ -22,7 +22,7 @@ RSpec.describe "Api::V1::Users", type: :request do
       get api_v1_user_url(@user), as: :json
     end
 
-    it { expect(json['username']).to eq(@user.username) }
+    it { expect(json[:data][:attributes][:username]).to eq(@user.username) }
     it { expect(response).to have_http_status(:success) }
   end
 

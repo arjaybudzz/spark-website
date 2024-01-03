@@ -22,7 +22,7 @@ RSpec.describe "Api::V1::Posts", type: :request do
       get api_v1_post_url(@post), as: :json
     end
 
-    it { expect(json['content']).to match(@post.content) }
+    it { expect(json[:content]).to match(@post.content) }
     it { expect(response).to have_http_status(:success) }
   end
 
