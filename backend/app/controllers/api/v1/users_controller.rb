@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
     before_action :setup_user, only: %i[show update destroy]
+    before_action :check_owner, only: %i[update destroy]
 
     wrap_parameters include: %i[username password password_confirmation]
     
@@ -42,5 +43,9 @@ class Api::V1::UsersController < ApplicationController
 
     def permitted_user_params
         params.require(:user).permit(:username, :password, :password_confirmation)
+    end
+
+    def check_owner
+        head :forbidden unless @user.id == current_user&.id
     end
 end

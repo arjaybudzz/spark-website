@@ -49,10 +49,11 @@ RSpec.describe "Api::V1::Users", type: :request do
   end
 
   describe 'PATCH /update' do
-    context 'update a user if input is valid' do
+    context 'update a user if input is valid and authorized' do
       before do
         patch api_v1_user_url(@user),
           params: { user: @user_valid_attributes },
+          headers: { Authorization: JsonWebToken.encode(user_id: @user.id) },
           as: :json
       end
 
@@ -63,18 +64,48 @@ RSpec.describe "Api::V1::Users", type: :request do
       before do
         patch api_v1_user_url(@user),
           params: { user: @user_invalid_attributes },
+          headers: { Authorization: JsonWebToken.encode(user_id: @user.id) },
           as: :json
       end
 
       it { expect(response).to have_http_status(:unprocessable_entity) }
     end
+
+    context 'forbid update if current user is not the owner of the account' do
+      let(:another_user) { create(:user) }
+
+      before do
+        patch api_v1_user_url(@user),
+          params: { user: @user_valid_attributes },
+          headers: { Authorization: JsonWebToken.encode(user_id: another_user.id) },
+          as: :json
+      end
+
+      it { expect(response).to have_http_status(:forbidden) }
+    end
   end
 
   describe "DELETE /destroy" do
-    before do
-      delete api_v1_user_url(@user), as: :json
+    context 'delete account if authorized' do
+      before do
+        delete api_v1_user_url(@user),
+        headers: { Authorization: JsonWebToken.encode(user_id: @user.id) },
+        as: :json
+      end
+
+      it { expect(response).to have_http_status(:no_content) }
     end
 
-    it { expect(response).to have_http_status(:no_content) }
+    context 'forbid to delete account if current user is unauthorized' do
+      let(:another_user) { create(:user) }
+
+      before do
+        delete api_v1_user_url(@user),
+        headers: { Authorization: JsonWebToken.encode(user_id: another_user.id) },
+        as: :json
+      end
+
+      it { expect(response).to have_http_status(:forbidden) }
+    end
   end
 end
