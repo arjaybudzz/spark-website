@@ -1,5 +1,5 @@
 import User from '../../../types'
-import { loginUrl, userUrl } from '../baseUrl'
+import { userUrl } from '../baseUrl'
 import axios from 'axios'
 
 export const createUser = async(data: Partial<User>, url: string = userUrl): Promise<void> => {
