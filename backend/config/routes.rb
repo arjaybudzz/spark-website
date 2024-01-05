@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :posts, only: %i[index show create update destroy]
 
       resources :tokens, only: %i[create]
+      resources :post_tokens, only: %i[create]
     end
   end
 

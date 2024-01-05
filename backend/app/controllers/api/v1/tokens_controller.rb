@@ -3,15 +3,17 @@ class Api::V1::TokensController < ApplicationController
         @user = User.find_by_username(permitted_user_params[:username])
 
         if @user&.authenticate(permitted_user_params[:password])
+            @token = JsonWebToken.encode(user_id: @user.id)
+            @user_id = @user.id
+
             render json: {
-                token: JsonWebToken.encode(user_id: @user.id),
-                id: @user.id
+                token: @token,
+                id: @user_id
             }
         else
             head :unauthorized
         end
     end
-
 
     private
 
