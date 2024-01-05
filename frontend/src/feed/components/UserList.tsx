@@ -1,25 +1,14 @@
-import { useEffect, useState } from 'react'
 import { getUsers } from '../../api/user/userActions'
 import { Typography } from '@mui/material';
 
 const UserList = async () => {
-    const [username, setUsername] = useState<string[]>([]);
-
-    useEffect(() => {
-        const data = getUsers();
-        data.then((response) => {
-            response.map((usernames) => {
-                setUsername([...username, usernames.username])
-            })
-        })
-    }, [])
-  
+    const data = await getUsers();
     return (
     <>
         {
-            username.map((user, index: number) => {
+            data.map((user: {[key: string]: any}, index: number) => {
                 return <Typography key={index}>
-                    {user}
+                    {user.attributes.username}
                 </Typography>
             })
         }

@@ -15,11 +15,11 @@ export const createUser = async(data: Partial<User>, url: string = userUrl): Pro
     })
 }
 
-export const getUsers = async(): Promise<{[key: string]: string}[]> => {
-    let data: {[key: string]: string}[] = [{}];
+export const getUsers = async(): Promise<{[key: string]: any}[]> => {
+    let data: {[key: string]: any}[] = [{}];
     
     await axios.get(userUrl).then((response) => {
-        data = response.data;
+        data = response.data.data;
     }).catch((errors) => {
         console.log(errors);
     })

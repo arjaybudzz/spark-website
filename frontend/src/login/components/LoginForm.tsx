@@ -8,6 +8,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { loginUrl } from '../../api/baseUrl'
 import { useNavigate } from 'react-router-dom'
+import { setCookie } from 'typescript-cookie'
 
 
 const LoginForm = () => {
@@ -34,6 +35,8 @@ const LoginForm = () => {
 
         await axios.post(url).then((response) => {
             console.log(response);
+            setCookie("userToken", response.data.token);
+            setCookie("userId", response.data.id);
             navigate("/feed");
             
         }).catch((errors) => {
