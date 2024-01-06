@@ -5,3 +5,4 @@ export const loginUrl = (username: string | undefined, password: string | undefi
 }
 
 export const userUrl = `${baseUrl}/users`;
+export const postUrl = `${baseUrl}/posts`;

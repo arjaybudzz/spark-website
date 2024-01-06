@@ -5,4 +5,10 @@ interface User {
     passwordConfirmation: string
 }
 
+interface Post {
+    id: string,
+    content: string
+}
+
 export default User
+export default Post
