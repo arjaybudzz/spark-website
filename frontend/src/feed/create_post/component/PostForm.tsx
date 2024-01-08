@@ -9,6 +9,7 @@ import { ExitToApp } from '@mui/icons-material'
 
 const PostForm = () => {
   const [postContent, setPostContent] = useState<string>("");
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const validation = yup.object().shape({
     content: yup.string().required("Please enter a post.")
@@ -37,6 +38,8 @@ const PostForm = () => {
         <TextField 
           type="text"
           label="Share your thoughts..."
+          multiline
+          maxRows={5}
           error={errors.content? true : false}
           helperText={errors.content?.message}
           {...register("content")}
@@ -49,8 +52,7 @@ const PostForm = () => {
             left: "24px",
             right: "24px",
             top: "84px",
-            height: "50px",
-            backgroundColor: "white"
+            height: "50px"
           }}/>
         <div className='flex justify-end flex-row items-center'>
           <Button 
