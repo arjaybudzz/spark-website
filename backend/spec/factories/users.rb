@@ -27,6 +27,24 @@ FactoryBot.define do
       factory :incorrect_login, traits: [:incorrect]
     end
 
+    factory :sample_created_user do
+      username { 'johnxyz' }
+      password { 'password' }
+      password_confirmation { 'password' }
+    end
+
+    factory :sample_created_user_2 do
+      username { 'heyheyhey' }
+      password { 'password' }
+      password_confirmation { 'password' }
+    end
+
+    factory :sample_created_user_3 do
+      username { 'heyjohn' }
+      password { 'password' }
+      password_confirmation { 'password' }
+    end
+
     factory :empty_username, traits: [:invalid]
   end
 end
