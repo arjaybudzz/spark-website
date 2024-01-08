@@ -1,5 +1,5 @@
-import { NotificationImportant, Notifications, Search } from "@mui/icons-material"
-import { AppBar, Typography, styled, alpha, InputBase, TextField, Button } from "@mui/material"
+import { AccountCircle, Mail, Message, MessageRounded, NotificationImportant, Notifications, Search } from "@mui/icons-material"
+import { AppBar, Typography, styled, alpha, InputBase, TextField, Button, IconButton, Badge } from "@mui/material"
 
 const NavBar = () => {
     const SearchWrapper = styled('div')(({theme}) => ({
@@ -59,10 +59,20 @@ const NavBar = () => {
                     </SearchWrapper>
                 </div>
 
-                <div className="flex flex-1">
-                    <Button startIcon={<Notifications />}>
-                        
-                    </Button>
+                <div className="flex flex-1 justify-end items-baseline gap-6">
+                    <IconButton size="large">
+                        <Badge badgeContent={12} color="error">
+                            <Notifications />
+                        </Badge>
+                    </IconButton>
+                    <IconButton size="large">
+                        <Badge badgeContent={1} color="error">
+                            <Mail />
+                        </Badge>
+                    </IconButton>
+                    <IconButton size="large">
+                        <AccountCircle />
+                    </IconButton>
                 </div>
         </AppBar>
     )
