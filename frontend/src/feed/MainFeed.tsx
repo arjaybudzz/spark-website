@@ -11,8 +11,9 @@ const MainFeed = () => {
   return (
     <div className='flex flex-col w-screen h-screen bg-gray-300 items-center'>
       <NavBar />
-        <h1>User token: {userToken}</h1>
-        <Typography variant='h4' component='h2'>Post</Typography>
+        <div>
+          
+        </div>
     </div>
   )
 }
