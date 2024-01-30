@@ -3,7 +3,7 @@ import React from 'react'
 
 const AppBar = () => {
   return (
-    <div className='flex flex-row relative top-0 left-0 right-0 h-14 bg-gray-300 shadow-md px-6 py-3 justify-start items-center shrink'>
+    <div className='flex flex-row fixed z-50 top-0 left-0 right-0 h-14 bg-gray-300 shadow-md px-6 py-3 justify-start items-center shrink'>
         <div className='flex flex-1'>
             <h1 className='text-2xl font-bold'>Spark</h1>
         </div>
